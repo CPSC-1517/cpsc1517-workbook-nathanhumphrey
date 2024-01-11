@@ -1,6 +1,6 @@
 # CPSC1517 Winter 2024 Term Workbook
 
-## your name here
+## Nathan Humphrey
 
 ## your Github Account id
 
