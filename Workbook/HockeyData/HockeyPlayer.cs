@@ -11,8 +11,6 @@ namespace Hockey.Data
 		private string _lastName;
 		private int _heightInInches;
 		private int _weightInPounds;
-		//private Position _position;
-		//private Shot _shot;
 
 		// Constructors
 
@@ -21,25 +19,28 @@ namespace Hockey.Data
 		{
 			FirstName = firstName;
 			LastName = lastName;
+			BirthPlace = birthPlace;
+			HeightInInches = heightInInches;
+			WeightInPounds = weightInPounds;
 			Position = position;
-			// TODO: complete for the rest
+			Shot = shot;
+			DateOfBirth = dateOfBirth;
 		}
 
-		/// <summary>
-		/// Default constructor, sets the first name to empty string, ....
-		/// </summary>
-		public HockeyPlayer()
-		{
-			_firstName = string.Empty;
-			_lastName = string.Empty;
-			_birthPlace = string.Empty;
-			_dateOfBirth = new DateOnly();
-			_heightInInches = 0;
-			_weightInPounds = 0;
-			// TODO: update the Shot property like the Position
-			// _shot = Shot.Left;
-			Position = Position.Center;
-		}
+		///// <summary>
+		///// Default constructor, sets the first name to empty string, ....
+		///// </summary>
+		//public HockeyPlayer()
+		//{
+		//	_firstName = string.Empty;
+		//	_lastName = string.Empty;
+		//	_birthPlace = string.Empty;
+		//	_dateOfBirth = new DateOnly();
+		//	_heightInInches = 0;
+		//	_weightInPounds = 0;
+		//	Shot = Shot.Left;
+		//	Position = Position.Center;
+		//}
 
 		// Properties
 		public string FirstName
@@ -49,7 +50,7 @@ namespace Hockey.Data
 				return _firstName;
 			}
 
-			set
+			private set
 			{
 				if (Utilities.IsNullEmptyOrWhiteSpace(value))
 				{
@@ -66,13 +67,30 @@ namespace Hockey.Data
 				return _lastName;
 			}
 
-			set
+			private set
 			{
 				if (Utilities.IsNullEmptyOrWhiteSpace(value))
 				{
 					throw new ArgumentException("Last name cannot be empty.");
 				}
 				_lastName = value;
+			}
+		}
+
+		public string BirthPlace
+		{
+			get
+			{
+				return _birthPlace;
+			}
+
+			private set
+			{
+				if (Utilities.IsNullEmptyOrWhiteSpace(value))
+				{
+					throw new ArgumentException("Birth place cannot be empty.");
+				}
+				_birthPlace = value;
 			}
 		}
 
@@ -83,7 +101,7 @@ namespace Hockey.Data
 				return _heightInInches;
 			}
 
-			set
+			private set
 			{
 				if (Utilities.IsZeroOrNegative(value))
 				{
@@ -94,8 +112,48 @@ namespace Hockey.Data
 			}
 		}
 
-		// Auto-implemented property
+		public int WeightInPounds
+		{
+			get
+			{
+				return _weightInPounds;
+			}
+
+			private set
+			{
+				if (Utilities.IsZeroOrNegative(value))
+				{
+					throw new ArgumentException("Weight must be positive.");
+				}
+
+				_weightInPounds = value;
+			}
+		}
+
+		public DateOnly DateOfBirth
+		{
+			get 
+			{
+				return _dateOfBirth;
+			}
+
+			private set
+			{
+				if (Utilities.IsInTheFuture(value))
+				{
+					throw new ArgumentException("Date of birth cannot be in the future.");
+				}
+				_dateOfBirth = value;
+			}
+		}
+
+		// Auto-implemented properties
 		public Position Position { get; set; }
+
+		public Shot Shot { get; set; }
+
+		// Derived property
+		public int Age => (DateOnly.FromDateTime(DateTime.Now).DayNumber - DateOfBirth.DayNumber) / 365;
 
 		// Methods
 		public override string ToString()
