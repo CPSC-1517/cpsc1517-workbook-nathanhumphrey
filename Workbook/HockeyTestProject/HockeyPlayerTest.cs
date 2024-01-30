@@ -134,11 +134,63 @@ namespace HockeyTestProject
 		}
 
 		// Parse good test
+		[Fact]
+		public void HockeyPlayer_Parse_ParsesCorrectly()
+		{
+			HockeyPlayer actual = null;
+			string line = ToStringValue;
+
+			actual = HockeyPlayer.Parse(line);
+
+			actual.Should().NotBeNull();
+			// TODO: could also check the individual properties
+		}
 
 		// Parse bad tests (empty line, number of fields, and format)
+		[Theory]
+		[InlineData(null, "*Line cannot be empty or null.*")]
+		[InlineData("", "*Line cannot be empty or null.*")]
+		[InlineData(" ", "*Line cannot be empty or null.*")]
+		public void HockeyPlayer_Parse_ThrowsForNullEmptyOrWhiteSpaceLine(string line, string errMsg)
+		{
+			Action act = () => HockeyPlayer.Parse(line);
+
+			act.Should().Throw<ArgumentNullException>().WithMessage(errMsg);
+		}
+
+		[Theory]
+		[InlineData("one,two,three,four,five,six,seven,eight", "Incorrect number of fields.")]
+		[InlineData("one,two,three,four,five,six,seven,eight,nine,ten", "Incorrect number of fields.")]
+		public void HockeyPlayer_Parse_ThrowsForInvalidNumberOfFields(string line, string errMsg)
+		{
+			Action act = () => HockeyPlayer.Parse(line);
+
+			act.Should().Throw<InvalidDataException>().WithMessage(errMsg);
+		}
+
+		[Theory]
+		[InlineData("one,two,three,four,five,six,seven,eight,nine", "Error parsing line")]
+		public void HockeyPlayer_Parse_ThrowsForFormatError(string line, string errMsg)
+		{
+			Action act = () => HockeyPlayer.Parse(line);
+
+			act.Should().Throw<FormatException>().WithMessage($"*{errMsg}*");
+		}
 
 		// TryParse true test
+		[Fact]
+		public void HockeyPlayer_TryParse_ParsesTrueCorrectly()
+		{
+			HockeyPlayer actual = null;
+			bool result;
+
+			result = HockeyPlayer.TryParse(ToStringValue, out actual);
+
+			result.Should().BeTrue();
+			actual.Should().NotBeNull();
+		}
 
 		// TryParse false test
+		// TODO: implement this one on your own.
 	}
 }

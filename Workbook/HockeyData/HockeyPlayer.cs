@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Drawing;
+using System.Globalization;
 using Utils;
 
 namespace Hockey.Data
@@ -184,7 +185,7 @@ namespace Hockey.Data
 		public override string ToString()
 		{
 			//TODO: complete for all properties
-			return $"{FirstName},{LastName},{DateOfBirth.ToString("MMM-dd-yyy", CultureInfo.InvariantCulture)},{BirthPlace.Replace(", ", "-")},{WeightInPounds},{HeightInInches},{Position},{Shot},{JerseyNumber}";
+			return $"{FirstName},{LastName},{DateOfBirth.ToString("MMM-dd-yyyy", CultureInfo.InvariantCulture)},{BirthPlace.Replace(", ", "-")},{WeightInPounds},{HeightInInches},{Position},{Shot},{JerseyNumber}";
 		}
 
 		public static HockeyPlayer Parse(string line)
@@ -203,11 +204,11 @@ namespace Hockey.Data
 			{
 				throw new InvalidDataException("Incorrect number of fields.");
 			}
-
+			// Connor,Brown,Jan-14-1994,Toronto-ON-CAN,188,72,Center,Left,28
 			try
 			{
 				player = new HockeyPlayer(fields[0], fields[1], fields[3], 
-					DateOnly.ParseExact(fields[2], "MMM-dd-yyy", CultureInfo.InvariantCulture),
+					DateOnly.ParseExact(fields[2], "MMM-dd-yyyy", CultureInfo.InvariantCulture),
 					int.Parse(fields[4]), int.Parse(fields[5]), int.Parse(fields[8]), Enum.Parse<Position>(fields[6]),
 					Enum.Parse<Shot>(fields[7]));
 			}
@@ -217,6 +218,23 @@ namespace Hockey.Data
 			}
 
 			return player;
+		}
+
+		public static bool TryParse(string line, out HockeyPlayer player)
+		{
+			bool isParsed = false;
+
+			try
+			{
+				player = HockeyPlayer.Parse(line);
+				isParsed = true;
+			}
+			catch
+			{
+				player = null;
+			}
+
+			return isParsed;
 		}
 	}
 }
