@@ -18,5 +18,13 @@
 		/// <returns>True if the date to check is in the future, false otherwise</returns>
 		public static bool IsInTheFuture(DateOnly value) => value > DateOnly.FromDateTime(DateTime.Now);
 		
+		/// <summary>
+		/// Checks that a value is in the range of min and max (inclusive)
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public static bool IsInRange(int value, int min, int max) => value >= min && value <= max;
 	}
 }
