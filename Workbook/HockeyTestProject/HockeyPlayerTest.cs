@@ -1,7 +1,5 @@
 using FluentAssertions;
 using Hockey.Data;
-using System.Globalization;
-using Xunit.Sdk;
 
 namespace HockeyTestProject
 {
