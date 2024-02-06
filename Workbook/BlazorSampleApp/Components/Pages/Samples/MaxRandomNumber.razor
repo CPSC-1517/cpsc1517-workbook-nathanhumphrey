@@ -1,0 +1,55 @@
+﻿@page "/samples/random-number"
+
+<h3>Max Random Number Example</h3>
+
+<p>This page will render a random number betwee 1 and a max value</p>
+
+@if (!string.IsNullOrWhiteSpace(FeedbackString))
+{
+	<div class="alert @(IsError ? "alert-danger" : "alert-info")">
+		@FeedbackString
+	</div>
+}
+
+<fieldset>
+	<div class="mb-3">
+		<label for="max-number">Max Number Value</label>
+		<input type="text" id="max-number" name="maxNumber" @bind="MaxNumber" />
+	</div>
+	<div class="mb-3">
+		<button class="btn btn-primary" @onclick="GenerateRandomNumber">Generate Number</button>
+	</div>
+	<div class="mb-3">
+		<button class="btn btn-secondary" @onclick="Reset">Reset Value</button>
+	</div>
+</fieldset>
+
+@code {
+	// can we use properties
+	private int MaxNumber { get; set; }
+	private int RandomNumber { get; set; }
+	private string? FeedbackString { get; set; }
+	private bool IsError { get; set; }
+
+	private void GenerateRandomNumber()
+	{
+		if (MaxNumber >= 1)
+		{
+			IsError = false;
+			RandomNumber = Random.Shared.Next(1, MaxNumber + 1);
+			FeedbackString = $"Your random number is {RandomNumber}.";
+		}
+		else
+		{
+			IsError = true;
+			FeedbackString = "Max number must be greater than zero.";
+		}
+	}
+
+	private void Reset()
+	{
+		IsError = false;
+		MaxNumber = 0;
+		FeedbackString = null;
+	}
+}
