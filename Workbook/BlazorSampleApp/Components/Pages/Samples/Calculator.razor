@@ -1,0 +1,58 @@
+﻿@page "/samples/calculator"
+
+<h3>Calculator</h3>
+
+<fieldset>
+	<div class="mb-3">
+		<label for="num1">Num 1:</label>
+		<input type="number" id="num1" name="num1" @bind="Num1" />
+	</div>
+	<div class="mb-3">
+		<label for="num2">Num 2:</label>
+		<input type="number" id="num2" name="num2" @bind="Num2" />
+	</div>
+	<div class="mb-3">
+		<button type="button" class="btn btn-warning" @onclick="Add">Num 1 + Num 2</button>
+		@* subtract button *@
+		@* multiply button *@
+		<button type="button" class="btn btn-success" @onclick="Divide">Num 1 / Num 2</button>
+	</div>
+</fieldset>
+
+@if (!string.IsNullOrWhiteSpace(Output))
+{
+	<div class="alert @(IsError ? "alert-danger": "alert-info")">
+		@Output
+	</div>
+}
+
+@code {
+	private bool IsError { get; set; }
+	private string Output { get; set; }
+	private int Num1 { get; set; }
+	private int Num2 { get; set; }
+
+	private void Add()
+	{
+		IsError = false;
+		Output = $"The sum is {Num1 + Num2}";
+	}
+
+	// TODO: Subtract and Multiply methods
+
+	private void Divide()
+	{
+		IsError = false;
+
+		// Can't divide by zero
+		if (Num2 == 0)
+		{
+			IsError = true;
+			Output = "Num 2 cannot be zero";
+		}
+		else
+		{
+			Output = $"The quotient is {((double)Num1 / Num2):F2}";
+		}
+	}
+}
