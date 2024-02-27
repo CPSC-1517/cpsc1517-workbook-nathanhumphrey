@@ -15,7 +15,7 @@ namespace BlazorSampleApp.Components.Pages.Samples
 		{
 			Players = new();
 
-			string csvFilePath = $@"{WebHostEnvironment.ContentRootPath}\Data\players-one.csv";
+			string csvFilePath = $@"{WebHostEnvironment.ContentRootPath}\Data\players.csv";
 
 			using (StreamReader reader = new StreamReader(csvFilePath))
 			{
