@@ -204,6 +204,7 @@ namespace Hockey.Data
 			{
 				throw new InvalidDataException("Incorrect number of fields.");
 			}
+
 			// Connor,Brown,Jan-14-1994,Toronto-ON-CAN,188,72,Center,Left,28
 			try
 			{

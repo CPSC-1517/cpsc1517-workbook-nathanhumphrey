@@ -1,0 +1,47 @@
+﻿@page "/samples/hockey-roster"
+
+<h3>Hockey Roster</h3>
+
+@if (FeedbackMessage != null)
+{
+	<div class="alert alert-danger">
+		@FeedbackMessage
+	</div>
+}
+
+@if (Players != null && Players.Count > 0)
+{
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>DOB</th>
+				<th>Birth Place</th>
+				<th>Weight</th>
+				<th>Height</th>
+				<th>Position</th>
+				<th>Shot</th>
+				<th>Jersey</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var currentPlayer in Players)
+			{
+				<tr>
+					<td>@currentPlayer.FirstName @currentPlayer.LastName</td>
+					<td>@currentPlayer.DateOfBirth</td>
+					<td>@currentPlayer.BirthPlace</td>
+					<td>@currentPlayer.WeightInPounds</td>
+					<td>@currentPlayer.HeightInInches</td>
+					<td>@currentPlayer.Position</td>
+					<td>@currentPlayer.Shot</td>
+					<td>@currentPlayer.JerseyNumber</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<p>Loading data...</p>
+}
