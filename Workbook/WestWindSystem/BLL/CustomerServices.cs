@@ -14,8 +14,7 @@ namespace WestWindSystem.BLL
 	{
 		private readonly WestWindContext _context;
 
-		// TODO: change to internal
-		public CustomerServices(WestWindContext context)
+		internal CustomerServices(WestWindContext context)
 		{
 			_context = context;
 		}

@@ -1,20 +1,33 @@
-﻿using WestWindSystem.BLL;
-using WestWindSystem.DAL;
+﻿using Microsoft.Extensions.DependencyInjection;
+using WestWindSystem.BLL;
 using WestWindSystem.Entities;
+using WestWindSystem;
+using Microsoft.EntityFrameworkCore;
 
-WestWindContext context = new WestWindContext();
+// Use a service provider
+IServiceCollection serviceCollection = new ServiceCollection();
+serviceCollection.WWBackendDependencies(options => 
+	options.UseSqlServer("Data Source=.;Initial Catalog=WestWind;Integrated Security=True;TrustServerCertificate=true"));
+ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
 // Using a services class
-CustomerServices customerServices = new CustomerServices(context);
+CustomerServices customerServices = serviceProvider.GetService<CustomerServices>();// must come from a ServiceProvider 
 
-foreach (var customer in customerServices.GetAllCustomers())
+foreach (var customer in customerServices!.GetAllCustomers())
 {
 	Console.WriteLine(customer.ContactName);
 }
 
 Customer? maria = customerServices.GetCustomerByContactName("maria");
 
-Console.WriteLine($"Maria works for: {maria.CompanyName}");
+if (maria != null)
+{
+	Console.WriteLine($"Maria works for: {maria.CompanyName}");
+}
+else
+{
+	Console.WriteLine("Maria was not found.");
+}
 
 // Using RAW context
 /*
