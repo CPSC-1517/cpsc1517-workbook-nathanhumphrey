@@ -1,0 +1,34 @@
+﻿@using WestWindSystem.BLL
+
+@page "/customer/{CustomerId}"
+
+<h3>Customer</h3>
+
+@if (CurrentCustomer != null)
+{
+	<div>
+		<p>@CurrentCustomer.ContactName</p>
+	</div>
+}
+else
+{
+	<div class="alert alert-info">
+		<p>No customer found with id "@CustomerId"</p>
+	</div>
+}
+
+@code {
+	[Parameter]
+	public string? CustomerId { get; set; }
+
+	public WestWindSystem.Entities.Customer? CurrentCustomer { get; set; }
+
+	[Inject]
+	CustomerServices? CustomerServices { get; set; }
+
+	protected override void OnInitialized()
+	{
+		CurrentCustomer = CustomerServices.GetCustomerById(CustomerId);
+		base.OnInitialized();
+	}
+}

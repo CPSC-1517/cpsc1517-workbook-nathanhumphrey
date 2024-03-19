@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HockeyTestProject", "Hockey
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSampleApp", "BlazorSampleApp\BlazorSampleApp.csproj", "{FE360E7D-4289-4B0C-9C2F-D18E176992EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestWindSystem", "WestWindSystem\WestWindSystem.csproj", "{5403F9BD-1EB2-4D02-95ED-2A52F23A0971}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestWindSystem", "WestWindSystem\WestWindSystem.csproj", "{5403F9BD-1EB2-4D02-95ED-2A52F23A0971}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestWindConsoleApp", "WestWindConsoleApp\WestWindConsoleApp.csproj", "{7EE49CA7-0529-4E24-A061-DF7308DDF817}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestWindConsoleApp", "WestWindConsoleApp\WestWindConsoleApp.csproj", "{7EE49CA7-0529-4E24-A061-DF7308DDF817}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestWindWebApp", "WestWindWebApp\WestWindWebApp.csproj", "{D9A03906-3D7F-4FB1-920E-F89ADD98B732}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{7EE49CA7-0529-4E24-A061-DF7308DDF817}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EE49CA7-0529-4E24-A061-DF7308DDF817}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EE49CA7-0529-4E24-A061-DF7308DDF817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9A03906-3D7F-4FB1-920E-F89ADD98B732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A03906-3D7F-4FB1-920E-F89ADD98B732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A03906-3D7F-4FB1-920E-F89ADD98B732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A03906-3D7F-4FB1-920E-F89ADD98B732}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
