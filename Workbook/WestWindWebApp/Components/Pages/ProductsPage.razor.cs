@@ -23,13 +23,16 @@ namespace WestWindWebApp.Components.Pages
 		[Parameter]
 		public int CategoryId { get; set; }
 
+		// Used for the partial search form
+		public string PartialSearch { get; set; }
+
 		protected override Task OnInitializedAsync()
 		{
 			return Task.Run(() =>
 			{
 				Categories = CategoryServices.GetAllCategories();
 
-				if (CategoryId != 0) 
+				if (CategoryId != 0)
 				{
 					Products = ProductServices.GetProductsByCategoryId(CategoryId);
 				}
@@ -41,10 +44,27 @@ namespace WestWindWebApp.Components.Pages
 		/// </summary>
 		private void HandleCategorySelected()
 		{
-			if (CategoryId != 0)
+			if (CategoryId > 0)
 			{
 				Products = ProductServices.GetProductsByCategoryId(CategoryId);
 				NavigationManager.NavigateTo($"/products/{CategoryId}");
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void HandlePartialSearch()
+		{
+			if (!string.IsNullOrWhiteSpace(PartialSearch)) 
+			{
+				Products = ProductServices.GetProductsByNameOrSupplierName(PartialSearch);
+				CategoryId = 0;
+				NavigationManager.NavigateTo($"/products");
+			}
+			else
+			{
+				Products.Clear();
 			}
 		}
 	}

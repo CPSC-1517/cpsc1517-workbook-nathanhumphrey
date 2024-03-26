@@ -3,7 +3,7 @@
 <h3>Products Page</h3>
 
 @* Display the categories *@
-<fieldset>
+<fieldset class="mb-3">
 	<legend>List by Category</legend>
 	@if (Categories == null)
 	{
@@ -33,31 +33,51 @@
 	}
 </fieldset>
 
+@* Filtering Form *@
+<fieldset class="mb-3">
+	<legend>Search by Name or Supplier Name</legend>
+	<div class="row row-cols-lg-auto g-3 align-items-center">
+		<div class="col-12">
+			<label class="visually-hidden" for="partial">
+				Partial Search:
+			</label>
+			<input class="form-control" id="partial" @bind="PartialSearch" />
+		</div>
+		<div class="col-12">
+			<button class="btn btn-primary" @onclick="HandlePartialSearch">
+				Search for Products
+			</button>
+		</div>
+	</div>
+</fieldset>
+
 @if (Products != null && Products.Count > 0)
 {
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Name</th>
-				<th>Discontinued</th>
-				<th>Supplier</th>
-				<th>Unit Price</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var p in Products)
-			{
+	<div style="max-height: 400px; overflow-y: scroll">
+		<table class="table table-striped">
+			<thead>
 				<tr>
-					<td>@p.ProductId</td>
-					<td>@p.ProductName</td>
-					<td>@p.Discontinued</td>
-					<td>@p.Supplier.CompanyName</td>
-					<td class="text-end">@($"{p.UnitPrice:C}")</td>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Discontinued</th>
+					<th>Supplier</th>
+					<th>Unit Price</th>
 				</tr>
-			}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				@foreach (var p in Products)
+				{
+					<tr>
+						<td>@p.ProductId</td>
+						<td>@p.ProductName</td>
+						<td>@p.Discontinued</td>
+						<td>@p.Supplier.CompanyName</td>
+						<td class="text-end">@($"{p.UnitPrice:C}")</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
 }
 else
 {

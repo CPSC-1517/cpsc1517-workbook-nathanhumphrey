@@ -27,6 +27,30 @@ namespace WestWindSystem.BLL
 			return _context.Products
 				.Include(p => p.Supplier)
 				.Where(p => p.CategoryId == id)
+				.OrderBy(p => p.ProductName)
+				.ToList<Product>();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="partial"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentNullException"></exception>
+		public List<Product> GetProductsByNameOrSupplierName(string partial)
+		{
+			if (string.IsNullOrWhiteSpace(partial))
+			{
+				throw new ArgumentNullException("Partial argument cannot be empty", new ArgumentException());
+			}
+
+			partial = partial.ToLower();
+
+			return _context.Products
+				.Include(p => p.Supplier)
+				.Where(p => p.ProductName.ToLower().Contains(partial) ||
+					p.Supplier.CompanyName.ToLower().Contains(partial))
+				.OrderBy(p => p.ProductName)
 				.ToList<Product>();
 		}
 	}
