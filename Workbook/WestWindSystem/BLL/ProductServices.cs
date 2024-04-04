@@ -53,5 +53,62 @@ namespace WestWindSystem.BLL
 				.OrderBy(p => p.ProductName)
 				.ToList<Product>();
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public Product? GetProductById(int id)
+		{
+			return _context.Products.Where(p => p.ProductId == id).FirstOrDefault();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="product"></param>
+		/// <exception cref="ArgumentNullException"></exception>
+		public void AddProduct(Product product)
+		{
+			if (product == null)
+			{
+				throw new ArgumentNullException("Product cannot be null", new ArgumentNullException());
+			}
+			_context.Products.Add(product);
+			_context.SaveChanges();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="product"></param>
+		/// <exception cref="ArgumentNullException"></exception>
+		public void UpdateProduct(Product product)
+		{
+			if (product == null)
+			{
+				throw new ArgumentNullException("Product cannot be null", new ArgumentNullException());
+			}
+			_context.Products.Update(product);
+			_context.SaveChanges();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="product"></param>
+		/// <exception cref="ArgumentNullException"></exception>
+		public void DiscontinueProduct(Product product)
+		{
+			if (product == null)
+			{
+				throw new ArgumentNullException("Product cannot be null", new ArgumentNullException());
+			}
+
+			product.Discontinued = true;
+			UpdateProduct(product);
+
+		}
 	}
 }

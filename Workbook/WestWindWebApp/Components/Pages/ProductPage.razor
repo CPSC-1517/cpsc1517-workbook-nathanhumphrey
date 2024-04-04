@@ -1,0 +1,110 @@
+﻿@page "/product/{ProductId:int?}"
+
+@if (ProductId != 0)
+{
+	<h3>View/Edit Product Page</h3>
+}
+else
+{
+	<h3>Add Product Page</h3>
+}
+
+@if (!string.IsNullOrWhiteSpace(FeedbackMessage))
+{
+	<div class="alert alert-info">
+		@FeedbackMessage
+	</div>
+}
+
+@if (Errors.Count > 0)
+{
+	<div class="alert alert-danger">
+		@foreach (var error in Errors)
+		{
+			<p class="m-0">@error</p>
+		}
+	</div>
+}
+
+<fieldset class="mb-3">
+	<legend>Product Details</legend>
+	@if (Product!.Discontinued)
+	{
+		<div class="row g-3 align-items-center">
+			<div class="alert alert-warning fw-bold col-12">
+				PRODUCT IS DISCONTINUED
+			</div>
+		</div>
+	}
+
+	<div class="row g-3 align-items-center mb-3">
+		@if (ProductId != 0)
+		{
+			<div class="col-2">
+				<label class="form-label" for="product-id">
+					Product Id
+				</label>
+				<input class="form-control" type="text" id="product-id" @bind="Product.ProductId" disabled/>
+			</div>
+		}
+		<div class="col-6">
+			<label class="form-label" for="product-name">
+				Product Name
+			</label>
+			<input class="form-control" type="text" id="product-name" @bind="Product.ProductName"
+				disabled="@(Product.Discontinued ? true : false)"/>
+		</div>
+		@* TODO create fields for the remaining properties *@
+	</div>
+</fieldset>
+
+<fieldset class="mb-3">
+	<legend>Related Details</legend>
+	<div class="row row-cols-lg-auto g-3 align-items-center">
+		<div class="col-12">
+			<label class="form-label" for="category">
+				Category
+			</label>
+			<select class="form-select" id="category" @bind="Product.CategoryId"
+					disabled="@(Product.Discontinued ? true : false)">
+				<option disabled selected value="0">Select a category</option>
+				@foreach (var cat in Categories)
+				{
+					<option value="@cat.CategoryId">@cat.CategoryName</option>
+				}
+			</select>
+		</div>
+	</div>
+	<div class="row row-cols-lg-auto g-3 align-items-center">
+		<div class="col-12">
+			<label class="form-label" for="supplier">
+				Supplier
+			</label>
+			<select class="form-select" id="supplier" @bind="Product.SupplierId"
+					disabled="@(Product.Discontinued ? true : false)">
+				<option disabled selected value="0">Select a supplier</option>
+				@foreach (var sup in Suppliers)
+				{
+					<option value="@sup.SupplierId">@sup.CompanyName</option>
+				}
+			</select>
+		</div>
+	</div>
+</fieldset>
+
+@if (!Product.Discontinued)
+{
+	<fieldset class="mt-5">
+		<div class="row row-cols-lg-auto g-3 align-items-center">
+			<div class="col-12">
+				<button class="btn btn-primary" @onclick="() => {}">Save Product</button>
+			</div>
+			@if (Product.ProductId != 0)
+			{
+				<div class="col-12">
+					<button class="btn btn-danger" @onclick="() => {}">Discontinue Product</button>
+				</div>
+			}
+		</div>
+	</fieldset>
+}

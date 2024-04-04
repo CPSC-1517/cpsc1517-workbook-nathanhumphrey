@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using WestWindSystem.DAL;
 using WestWindSystem.Entities;
 
 namespace WestWindSystem.BLL
 {
-	public class CategoryServices
+	public class SupplierServices
 	{
 		private readonly WestWindContext _context;
-		internal CategoryServices(WestWindContext context)
+		internal SupplierServices(WestWindContext context)
 		{
 			_context = context;
 		}
@@ -21,9 +20,9 @@ namespace WestWindSystem.BLL
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public List<Category> GetAllCategories()
+		public List<Supplier> GetAllSuppliers()
 		{
-			return _context.Categories.OrderBy(c => c.CategoryName).ToList<Category>();
+			return _context.Suppliers.OrderBy(s => s.CompanyName).ToList<Supplier>();
 		}
 	}
 }
