@@ -1,6 +1,6 @@
 ﻿@page "/products/{CategoryId:int?}"
 
-<h3>Products Page</h3>
+<h3>Products Page <span style="float:right"><a class="btn btn-success" href="/product">New Product</a></span></h3>
 
 @* Display the categories *@
 <fieldset class="mb-3">
@@ -57,7 +57,7 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>ID</th>
+					<th>Edit</th>
 					<th>Name</th>
 					<th>Discontinued</th>
 					<th>Supplier</th>
@@ -68,7 +68,7 @@
 				@foreach (var p in Products)
 				{
 					<tr>
-						<td>@p.ProductId</td>
+						<td><a href="/product/@p.ProductId">View / Edit</a></td>
 						<td>@p.ProductName</td>
 						<td>@p.Discontinued</td>
 						<td>@p.Supplier.CompanyName</td>
