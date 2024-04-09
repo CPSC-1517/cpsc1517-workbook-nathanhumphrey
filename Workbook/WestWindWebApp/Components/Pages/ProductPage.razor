@@ -130,12 +130,12 @@ else
 	<fieldset class="mt-5">
 		<div class="row row-cols-lg-auto g-3 align-items-center">
 			<div class="col-12">
-				<button class="btn btn-primary" @onclick="() => {}">Save Product</button>
+				<button class="btn btn-primary" @onclick="HandleSaveProduct">Save Product</button>
 			</div>
 			@if (Product.ProductId != 0)
 			{
 				<div class="col-12">
-					<button class="btn btn-danger" @onclick="() => {}">Discontinue Product</button>
+					<button class="btn btn-danger" @onclick="HandleDiscontinue">Discontinue Product</button>
 				</div>
 			}
 		</div>

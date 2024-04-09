@@ -50,40 +50,97 @@ namespace WestWindWebApp.Components.Pages
 			});
 		}
 
-		// TODO: add a discontinue button handler
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private bool IsValidForm()
+		{
+			Errors.Clear();
+
+			if (string.IsNullOrWhiteSpace(Product!.ProductName))
+			{
+				Errors.Add("Product name cannot be empty");
+			}
+
+			if (string.IsNullOrWhiteSpace(Product!.QuantityPerUnit))
+			{
+				Errors.Add("Quantity per unit cannot be empty");
+			}
+
+			if (Product.UnitPrice <= 0)
+			{
+				Errors.Add("Unit price must be positive");
+			}
+
+			if (Product.UnitsOnOrder < 0)
+			{
+				Errors.Add("Units on order cannot be negative");
+			}
+
+			if (Product.CategoryId == 0)
+			{
+				Errors.Add("Must select a category");
+			}
+
+			if (Product.SupplierId == 0)
+			{
+				Errors.Add("Must select a supplier");
+			}
+
+			return Errors.Count() == 0;
+		}
 
 		/// <summary>
 		/// 
 		/// </summary>
-		private void HandleSaveProduct()
+		private void HandleDiscontinue()
 		{
-			// TODO: create a validate method
-			// IF VALID - is it new or is it edit?
-
-
-			if (Product!.ProductId == 0)
+			if (Product.ProductId != 0)
 			{
 				try
 				{
-					ProductServices.AddProduct(Product);
-					FeedbackMessage = "Product successfully added";
-					NavigationManager.NavigateTo($"/product/{Product!.ProductId}");
+					ProductServices.DiscontinueProduct(Product);
+					FeedbackMessage = "Product successfully discontinued";
 				}
 				catch (Exception ex)
 				{
 					Errors.Add(ex.Message);
 				}
 			}
-			else
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void HandleSaveProduct()
+		{
+			if (IsValidForm())
 			{
-				try
+				if (Product!.ProductId == 0)
 				{
-					ProductServices.UpdateProduct(Product);
-					FeedbackMessage = "Product successfully updated";
+					try
+					{
+						ProductServices.AddProduct(Product);
+						FeedbackMessage = "Product successfully added";
+						NavigationManager.NavigateTo($"/product/{Product!.ProductId}");
+					}
+					catch (Exception ex)
+					{
+						Errors.Add(ex.Message);
+					}
 				}
-				catch (Exception ex)
+				else
 				{
-					Errors.Add(ex.Message);
+					try
+					{
+						ProductServices.UpdateProduct(Product);
+						FeedbackMessage = "Product successfully updated";
+					}
+					catch (Exception ex)
+					{
+						Errors.Add(ex.Message);
+					}
 				}
 			}
 		}
