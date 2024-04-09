@@ -9,9 +9,9 @@ namespace WestWindSystem
 	public static class WWBackendExtensions
 	{
 		public static void WWBackendDependencies(this IServiceCollection services, 
-			Action<DbContextOptionsBuilder> options)
+			Action<DbContextOptionsBuilder> options) 
 		{
-			services.AddDbContext<WestWindContext>(options);
+			services.AddDbContext<WestWindContext>(options, ServiceLifetime.Transient);
 
 			services.AddTransient<CustomerServices>((serviceProvider) =>
 			{
