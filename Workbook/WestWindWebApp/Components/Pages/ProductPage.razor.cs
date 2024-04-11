@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using WestWindSystem.BLL;
 using WestWindSystem.Entities;
 
@@ -6,6 +7,9 @@ namespace WestWindWebApp.Components.Pages
 {
 	public partial class ProductPage
 	{
+		[Inject]
+		IJSRuntime JSRuntime { get; set; }
+
 		[Inject]
 		ProductServices ProductServices { get; set; }
 		[Inject]
@@ -94,18 +98,40 @@ namespace WestWindWebApp.Components.Pages
 		/// <summary>
 		/// 
 		/// </summary>
-		private void HandleDiscontinue()
+		//private void HandleDiscontinue()
+		//{
+		//	if (Product.ProductId != 0)
+		//	{
+		//		try
+		//		{
+		//			ProductServices.DiscontinueProduct(Product);
+		//			FeedbackMessage = "Product successfully discontinued";
+		//		}
+		//		catch (Exception ex)
+		//		{
+		//			Errors.Add(ex.Message);
+		//		}
+		//	}
+		//}
+
+		private async Task HandleDiscontinue()
 		{
-			if (Product.ProductId != 0)
+			if (Product!.ProductId != 0)
 			{
-				try
+				// Make a JS call to confirm whether to discontinue or not
+				object[] message = new[] { "Are you sure you want to discontinue?" };
+				
+				if (await JSRuntime.InvokeAsync<bool>("confirm", message))
 				{
-					ProductServices.DiscontinueProduct(Product);
-					FeedbackMessage = "Product successfully discontinued";
-				}
-				catch (Exception ex)
-				{
-					Errors.Add(ex.Message);
+					try
+					{
+						ProductServices.DiscontinueProduct(Product);
+						FeedbackMessage = "Product successfully discontinued";
+					}
+					catch (Exception ex)
+					{
+						Errors.Add(ex.Message);
+					}
 				}
 			}
 		}
